@@ -1,5 +1,6 @@
 <?php
 require "../config.php";
+
 class PanierController
 {
     public function showPanier()
@@ -14,23 +15,40 @@ class PanierController
         }
     }
     public function ajouter_produit($produit)
-    {
-        $sql = "INSERT into produits VALUES (null,:nom,:prix,:quantite,:img)";
-        $db = config::getConnexion();
-        try{
-            $query = $db->prepare($sql);
-            $query->execute([
+{
+    $db = config::getConnexion();
+
+    try {
+        $checkSql = "SELECT * FROM produits WHERE (nom = :nom && cin = :cin)";
+        $checkQuery = $db->prepare($checkSql);
+        $checkQuery->execute([
+            'nom' => $produit->getNom(),
+            'cin' => $produit->getCin(),
+        ]);
+        $existingProduct = $checkQuery->fetch();
+
+        if ($existingProduct) {
+            $updateSql = "UPDATE produits SET quantite = quantite + :quantite WHERE nom = :nom";
+            $updateQuery = $db->prepare($updateSql);
+            $updateQuery->execute([
+                'quantite' => $produit->getQuantite(),
+                'nom' => $produit->getNom(),
+            ]);
+        } else {
+            $insertSql = "INSERT INTO produits (nom, prix, quantite, img,cin) VALUES (:nom, :prix, :quantite, :img,:cin)";
+            $insertQuery = $db->prepare($insertSql);
+            $insertQuery->execute([
                 'img' => $produit->getImage(),
                 'nom' => $produit->getNom(),
                 'prix' => $produit->getPrix(),
                 'quantite' => $produit->getQuantite(),
-                
+                'cin' => $produit->getCin(),
             ]);
         }
-        catch(Exception $e){
-            die("ERROR: " . $e->getMessage());
-        }
+    } catch (Exception $e) {
+        die("ERROR: " . $e->getMessage());
     }
+}
     public function supprimer_produit($id)
     {
         $db = config::getConnexion();
@@ -43,10 +61,80 @@ class PanierController
             die("ERROR: " . $e->getMessage());
         }
     }
+
+    public function ajouter_achat($cin, $name)
+{
+    // First, retrieve the id from produits based on the provided name
+    $db = config::getConnexion();
+    $selectQuery = "SELECT id FROM produit WHERE nom = :name";
+    $dateA = date("Y-m-d H:i:s");
+    try {
+        $selectStatement = $db->prepare($selectQuery);
+        $selectStatement->execute(['name' => $name]);
+        $row = $selectStatement->fetch(PDO::FETCH_ASSOC);
+
+        if (!$row) {
+            // Handle the case where the name doesn't exist in produits
+            return false;
+        }
+
+        $id = $row['id'];
+        
+        // Now, perform the INSERT into achats
+        $insertQuery = "INSERT INTO achats (cin, id,dateA) VALUES (:cin, :id,:dateA)";
+        $insertStatement = $db->prepare($insertQuery);
+        $insertStatement->execute([
+            'cin' => $cin,
+            'id' => $id,
+            'dateA' => $dateA
+        ]);
+
+        // Return true if the insertion is successful
+        return true;
+    } catch (Exception $e) {
+        die("ERROR: " . $e->getMessage());
+    }
 }
+
+}
+
+
 class ProduitController
 {
     public function showproduct()
+    {
+        $db = config::getConnexion();
+        $selectQuery = "SELECT achats.id, achats.cin,achats.dateA, produit.nom
+                FROM achats
+                JOIN produit ON achats.id = produit.id";
+try {
+    $selectStatement = $db->prepare($selectQuery);
+    $selectStatement->execute();
+    $result = $selectStatement->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$result) {
+        // Handle the case where there are no matching records
+        return false;
+    }
+
+
+    return $result;
+            
+        } catch (Exception $e) {
+            die("ERROR: " . $e->getMessage());
+        }
+    }
+    public function Show_achats()
+    {
+        $db = config::getConnexion();
+        $sql = "SELECT id FROM achats ";
+        try {
+            
+        } catch (Exception $e) {
+            die("ERROR: " . $e->getMessage());
+        }
+    }
+    public function showproduct1()
     {
         $db = config::getConnexion();
         $sql = "SELECT * FROM produit ";
@@ -69,15 +157,14 @@ class ProduitController
                 'nom' => $product->getNom(),
                 'prix' => $product->getPrix(),
                 'quantite'=> $product->getQuantite(),
-                
-                
-                
+   
             ]);
         }
         catch(Exception $e){
             die("ERROR: " . $e->getMessage());
         }
     }
+
     public function supprimer_prod($id)
     {
         $db = config::getConnexion();
@@ -146,7 +233,7 @@ class UserController
     }
     public function ajouter_user($user)
     {
-        $sql = "INSERT into user VALUES (:cin,:nom,:prenom,:email,:n_carte)";
+        $sql = "INSERT into user VALUES (:cin,:nom,:prenom,:email)";
         $db = config::getConnexion();
         try{
             $query = $db->prepare($sql);
@@ -155,7 +242,7 @@ class UserController
                 'nom' => $user->getNom(),
                 'prenom' => $user->getPrenom(),
                 'email' => $user->getEmail(),
-                'n_carte' => $user->getN_carte(),
+          
                 
             ]);
         }
