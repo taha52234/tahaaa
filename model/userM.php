@@ -5,16 +5,16 @@ class User
     private ?string $nom = null;
     private ?string $prenom= null;
     private ?string $email = null;
-    private ?string $n_carte = null;
 
 
-    public function __construct($c, $n, $pr,$e,$nc)
+
+    public function __construct($c, $n, $pr,$e)
     {
         $this->cin= $c;
         $this->nom = $n;
         $this->prenom = $pr;
         $this->email = $e;
-        $this->n_carte = $nc;
+   
         
 
     }
@@ -34,10 +34,7 @@ class User
     {
         return $this->email;
     }
-    public function getN_carte()
-    {
-        return $this->n_carte;
-    }
+  
     public function setCin($c)
     {
         return $this->cin = $c;
@@ -54,10 +51,7 @@ class User
     {
         return $this->email = $e;
     }
-    public function setN_carte($nc)
-    {
-        return $this->n_carte = $nc;
-    }
+   
    
     
 }

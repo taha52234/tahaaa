@@ -1,7 +1,9 @@
 <?php
+session_start();
 require "../controller/panierC.php";
 $c = new PanierController();
 $tab = $c->showPanier();
+$total = 0;
 
 ?>
 <!DOCTYPE html>
@@ -15,7 +17,7 @@ $tab = $c->showPanier();
 </head>
 
 <body class="panier">
-    <a href="index.html" class="lien1">Retourner</a>
+    <a href="donate.php" class="lien1">Retourner</a>
     <br>
     <br>
     <section>
@@ -29,6 +31,8 @@ $tab = $c->showPanier();
             </tr>
             <?php
             foreach ($tab as $produit) {
+                if ($produit["cin"] == $_SESSION['cin'])
+                {
             ?>
                 <tr>
                     <td><img src="<?php echo $produit['img'] ?>" /></td>
@@ -39,21 +43,17 @@ $tab = $c->showPanier();
                     <td><a href="supprimerProduit.php?id=<?php echo $produit['id']; ?>"><img src="supp.png"></a></td>
                 </tr>
             <?php
-            }
-            ?>
+                $total +=  $produit['prix'] * $produit['quantite'];
+            }} ?>
             <tr class="total">
                 <th>Total:
                     <?php
-                    $total = 0;
-                    foreach ($tab as $produit) {
-                        $total +=  $produit['prix'] * $produit['quantite'];
-                    }
                     echo $total . "$";
                     ?>
                 </th>
 
             </tr>
-            <a href="index.html" class="lien2">Confirmer</a>
+            <a href="payer.php?total=<?php echo $total?>" class="lien2">Confirmer</a>
             </tr>
         </table>
     </section>

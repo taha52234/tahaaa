@@ -6,9 +6,10 @@ class Panier
     private ?int $prix = null;
     private ?int $quantite = null;
     private ?string $nom = null;
+    private ?string $cin = null;
 
 
-    public function __construct($idp, $pr, $q,$n,$i)
+    public function __construct($idp=null, $pr, $q,$n,$i,$c)
     {
         $this->id = $idp;
         $this->prix = $pr;
@@ -16,7 +17,17 @@ class Panier
         $this->quantite = $q;
         $this->prix = $pr;
         $this->img = $i;
+        $this->cin = $c;
 
+    }
+    public function getCin()
+    {
+        return $this->cin;
+    }
+
+    public function setCin($cin)
+    {
+        $this->cin = $cin;
     }
     public function getPrix()
     {

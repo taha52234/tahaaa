@@ -7,9 +7,9 @@ $productC = new ProduitController();
 if (isset($_POST["img"]) && isset($_POST["id"]) && isset($_POST["nom"]) && isset($_POST["prix"]) && isset($_POST["quantite"])) //input control
 {
     if (!empty($_POST["img"]) && !empty($_POST["id"])&& !empty($_POST["nom"])&& !empty($_POST["prix"])&& !empty($_POST["quantite"])) {
-        $product = new Produit($_POST["img"], $_POST["id"], $_POST["nom"], $_POST["prix"], $_POST["quantite"]);    
+        $product = new Produit($_POST["img"], $_POST["id"], $_POST["nom"], $_POST["prix"], $_POST["quantite"],null);    
         $productC->addproduct($product);
-        header('Location:produitback.php');
+        header('Location:tables.php');
     } else {
         $error = "information manquante";
     }
@@ -39,6 +39,6 @@ if (isset($_POST["img"]) && isset($_POST["id"]) && isset($_POST["nom"]) && isset
 
 
 
-    <button type="submit" href="produitback.php">Enregistrer</button>
+    <button type="submit" href="tables.php">Enregistrer</button>
 </form>
 

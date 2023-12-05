@@ -9,13 +9,13 @@ if (isset($_POST["img"]) && isset($_POST["id"]) && isset($_POST["nom"]) && isset
     if (!empty($_POST["img"]) && !empty($_POST["id"])&& !empty($_POST["nom"])&& !empty($_POST["prix"])&& !empty($_POST["quantite"])) {
         $product = new Produit($_POST["img"], $_POST["id"], $_POST["nom"], $_POST["prix"], $_POST["quantite"]);    
         $productC->updateProduit($product,$_GET['id']);
-        header('Location:produitback.php');
+        header('Location:tables.php');
     } else {
         $error = "information manquante";
     }
 } 
 ?>
-<button><a href="produitback.php">Back to produits</a></button>
+<button><a href="tables.php">Back to produits</a></button>
 
     <?php
     if (isset($_GET['id'])) {

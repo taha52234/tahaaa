@@ -1,6 +1,8 @@
 <?php
 require "../Controller/panierC.php";
 $c = new UserController();
+$t = new ProduitController();
+$achats = $t->showproduct();
 $tab = $c->showUser();
 ?>
 <!DOCTYPE html>
@@ -18,9 +20,7 @@ $tab = $c->showUser();
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -66,8 +66,7 @@ $tab = $c->showUser();
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Components</span>
                 </a>
@@ -82,13 +81,11 @@ $tab = $c->showUser();
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Utilities</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="utilities-color.html">Colors</a>
@@ -109,8 +106,7 @@ $tab = $c->showUser();
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
@@ -170,11 +166,9 @@ $tab = $c->showUser();
                     </form>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -188,18 +182,14 @@ $tab = $c->showUser();
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -212,15 +202,13 @@ $tab = $c->showUser();
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Alerts Center
                                 </h6>
@@ -263,22 +251,19 @@ $tab = $c->showUser();
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -289,8 +274,7 @@ $tab = $c->showUser();
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -301,8 +285,7 @@ $tab = $c->showUser();
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -313,8 +296,7 @@ $tab = $c->showUser();
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -331,15 +313,12 @@ $tab = $c->showUser();
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
@@ -371,8 +350,7 @@ $tab = $c->showUser();
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">TableE</h1>
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                        For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -388,88 +366,193 @@ $tab = $c->showUser();
                                             <th>nom</th>
                                             <th>prenom</th>
                                             <th>email</th>
-                                            <th>n_carte</th>
+                                            
                                             <th></th>
 
                                         </tr>
                                     <tbody>
-                                    <?php
-                                    foreach ($tab as $user) {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $user['cin']; ?></td>
-                                            <td><?php echo $user['nom']; ?></td>
-                                            <td><?php echo $user['prenom']; ?></td>
-                                            <td><?php echo $user['email']; ?></td>
-                                            <td><?php echo $user['n°carte']; ?></td>
-                                            <td><a href="supprimeruser.php?cin=<?php echo $user['cin']; ?>"><img src="supp.png"></a></td>
-                                            <
+                                        <?php
+                                        foreach ($tab as $user) {
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $user['cin']; ?></td>
+                                                <td><?php echo $user['nom']; ?></td>
+                                                <td><?php echo $user['prenom']; ?></td>
+                                                <td><?php echo $user['email']; ?></td>
+                                                
+                                                <td><a href="supprimeruser.php?cin=<?php echo $user['cin']; ?>"><img src="supp.png"></a></td>
+                                                < </tr>
+                                                <?php
+                                            }
+                                                ?>
 
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
-                </div>
-                <h1 class="h3 mb-2 text-gray-800">TableP</h1>
-                <?php
+                    <?php
 
 $c = new ProduitController();
-$tab = $c->showproduct();
+$tab = $c->showproduct1();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<table border="1" width="55%">
-                                    <thead>
-                                        <tr>
-                                            <th>img</th>
-                                            <th>id</th>
-                                            <th>nom</th>
-                                            <th>prix</th>
-                                            <th>quantite</th>
-                                            <th>update</th>
-                                            <th>Ajouter</th>
-                                            
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
 
-                                        </tr>
-                                    <tbody>
-                                    <?php
-                                    foreach ($tab as $product) {
-                                    ?>
-                                        <tr>
-                                            <td><?php echo $product['img']; ?></td>
-                                            <td><?php echo $product['id']; ?></td>
-                                            <td><?php echo $product['nom']; ?></td>
-                                            <td><?php echo $product['prix']; ?></td>
-                                            <td><?php echo $product['quantite']; ?></td>
-                                            <td><h1><a href="updateProduit.php?id=<?= $product['id']; ?>">Update</a></h1></td>
-                                            <td><h1><a href="test.php">Ajouter</a></h1></td>
-                                            <td><a href="suppprod.php?id=<?php echo $product['id']; ?>"><img src="supp.png"></a></td>
-                                            
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">TableE</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                               <div id="dataTable_wrapper" class=" dataTables_wrapper dt-bootstrap4 no-footer">
+                                  <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="dataTable_length">
+                                            <label>
+                                                Show
+                                                <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                                 entries
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div id="dataTable_filter" class="dataTables_filter">
+                                            <label>
+                                                "Search:"
+                                                <input type="search" class="form-control form-control-sm" placeholder aria-controls="dataTable">
+                                            </label>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12">
 
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                        
-                                    </tbody>
-                                </table>
-</body>
-</html>
 
-            </div>
+
+
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                        <th>img</th>
+                                                        <th>id</th>
+                                                        <th>nom</th>
+                                                        <th>prix</th>
+                                                        <th>quantite</th>
+                                                        <th>update</th>
+                                                        <th>Ajouter</th>
+                                                        
+
+                                                </tr>
+                                            <tbody>
+                                                <?php
+                                                foreach ($tab as $product) {
+                                                ?>
+                                                    <tr>
+                                                        <td><?php echo $product['img']; ?></td>
+                                                        <td><?php echo $product['id']; ?></td>
+                                                        <td><?php echo $product['nom']; ?></td>
+                                                        <td><?php echo $product['prix']; ?></td>
+                                                        <td><?php echo $product['quantite']; ?></td>
+                                                        <td><h1><a href="updateProduit.php?id=<?= $product['id']; ?>">Update</a></h1></td>
+                                                        <td><h1><a href="test.php">Ajouter</a></h1></td>
+                                                        <td><a href="suppprod.php?id=<?php echo $product['id']; ?>"><img src="supp.png"></a></td>
+                                                        
+
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">TableE</h1>
+                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                        For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                               <div id="dataTable_wrapper" class=" dataTables_wrapper dt-bootstrap4 no-footer">
+                                  <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length" id="dataTable_length">
+                                            <label>
+                                                Show
+                                                <select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="10">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>
+                                                 entries
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div id="dataTable_filter" class="dataTables_filter">
+                                            <label>
+                                                "Search:"
+                                                <input type="search" class="form-control form-control-sm" placeholder aria-controls="dataTable">
+                                            </label>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-12">
+
+
+
+
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                <th>nom</th>
+                                                <th>cin</th>
+                                                <th>Date d'achat</th>
+                                                </tr>
+                                            <tbody>
+                                                <?php
+                                                foreach ($achats as $join) {
+                                                ?>
+                                                <tr>
+
+                                                    <td><?php echo $join['nom']; ?></td>
+                                                    <td><?php echo $join['cin']; ?></td>
+                                                    <td><?php echo $join['dateA']?></td>
+                                                </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
             <!-- End of Main Content -->
 
             <!-- Footer -->
@@ -482,7 +565,7 @@ $tab = $c->showproduct();
             </footer>
             <!-- End of Footer -->
 
-        </div>
+        
         <!-- End of Content Wrapper -->
 
     </div>
@@ -494,8 +577,7 @@ $tab = $c->showproduct();
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

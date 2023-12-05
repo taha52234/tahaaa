@@ -1,16 +1,19 @@
 <?php
+session_start();
 include "../controller/panierC.php";
 include "../model/panierM.php";
+include "../model/productM.php";
 $error ="" ;
 $produit = null;
 $produitC = new PanierController();
-if(isset($_POST["id"])&&isset($_POST["prix"])&&isset($_POST["quantite"])&&isset($_POST["nom"])&&isset($_POST["image"])) //input control
+if(isset($_POST["prix"])&&isset($_POST["quantite"])&&isset($_POST["nom"])&&isset($_POST["image"])) //input control
 {
-    if(!empty($_POST["id"]) && !empty($_POST["prix"]) && !empty($_POST["quantite"]) && !empty($_POST["nom"]) && !empty($_POST["image"]))
+    if( !empty($_POST["prix"]) && !empty($_POST["quantite"]) && !empty($_POST["nom"]) && !empty($_POST["image"]))
     {
-        $produit = new Panier($_POST["id"],$_POST["prix"],$_POST["quantite"],$_POST["nom"],$_POST["image"]);    //adding values to new panier object
+        $produit = new Panier(null,$_POST["prix"],$_POST["quantite"],$_POST["nom"],$_POST["image"],$_SESSION['cin']);    //adding values to new panier object
         $produitC->ajouter_produit($produit);
-        header('Location:panier.php');
+        //echo $_SESSION['cin'];
+        //header('Location:panier.php');
     }
     else
     {
@@ -20,7 +23,7 @@ if(isset($_POST["id"])&&isset($_POST["prix"])&&isset($_POST["quantite"])&&isset(
 <?php
 //include "../controller/productC.php";
 $c = new ProduitController();
-$tab = $c->showproduct();
+$tab = $c->showproduct1();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +35,14 @@ $tab = $c->showproduct();
         <meta content="Free Website Template" name="description">
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+    integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,700;1,400&family=Fira+Code:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,100;1,9..144,900&family=Outfit:wght@400;700&family=Poppins:wght@400;500;700&display=swap"
+    rel="stylesheet" />
 
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
@@ -74,6 +85,26 @@ $tab = $c->showproduct();
             body{
                 background-color: #04202e; 
             }
+            #qr-code {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px;
+      padding: 33px 0;
+    }
+
+    #Generate {
+      background-color: #3498db;
+      padding: 20px;
+      border-radius: 2rem;
+      height: 300px;
+    }
+
+    @media screen and (max-width: 414px) {
+      #Generate {
+        height: 400px;
+      }
+    }
        
     </style>
     <body>
@@ -150,7 +181,7 @@ $tab = $c->showproduct();
                     </div>
                     <div class="col-12">
                         <a href="">Home</a>
-                        <a href="">Donate</a>
+                        <a href="logout.php">Donate</a>
                     </div>
                 </div>
             </div>
@@ -247,6 +278,39 @@ $tab = $c->showproduct();
          <div class="phrase-container">
             <div class="phrase">let's donate</div>
         </div>
+        <?php
+        function searchproduit($nom){
+                $sql = "SELECT * from produit where nom = :nom";
+                $db = config::getConnexion();
+                try {
+                    $query = $db->prepare($sql);
+                    $query->bindValue(':nom', $nom);
+                    $query->execute();
+                    $Product = $query->fetch();
+                    return $Product;
+                } catch (Exception $e) {
+                    die('Error: ' . $e->getMessage());
+                }
+            }?>
+        <form action=""  method="GET">
+            <div id="searchBar">
+            <label for="nom">Search By Name:</label>
+            <input type="text" id="" name="nom">
+            <input type="submit" value="Search">
+            </div>
+        </form>
+            <?php
+           
+        
+            $k = new ProduitController();
+            if (isset($_GET['nom']) && !empty($_GET['nom'])) {
+                $t = $k->searchproduit($_GET['nom']);
+            } 
+            else
+            {
+                $t = $k->showproduct1();
+            }
+            ?>
        
         <h1>produit :</h1>
 
@@ -261,7 +325,7 @@ $tab = $c->showproduct();
                     <div class="contenu">
                     <h4 class="nom">t-shirt </h4>
                     <h2 class="prix">35 €</h2>
-                        <input type="hidden" name="id" value="1">
+                        <input type="hidden" name="id" >
                         <input type="hidden" name="nom" value="t-shirt">
                         <input type="hidden" name="prix" value="35">
                         <input type="hidden" name="image" value="vet2.png">
@@ -280,7 +344,7 @@ $tab = $c->showproduct();
                     <div class="contenu">
                     <h4 class="nom">jeans</h4>
                     <h2 class="prix">63 €</h2>
-                        <input type="hidden" name="id" value="2">
+                        <input type="hidden" name="id" >
                         <input type="hidden" name="nom" value="jeans">
                         <input type="hidden" name="prix" value="63">
                         <input type="hidden" name="image" value="vet3.png">
@@ -297,7 +361,7 @@ $tab = $c->showproduct();
             <div class="contenu">
                 <h4 class="nom">monteau</h4>
                 <h2 class="prix">99 €</h2>
-                    <input type="hidden" name="id" value="3">
+                    <input type="hidden" name="id" >
                     <input type="hidden" name="nom" value="monteau">
                     <input type="hidden" name="prix" value="99">
                     <input type="hidden" name="image" value="vet4.png">
@@ -316,7 +380,7 @@ $tab = $c->showproduct();
             <div class="contenu">
                 <h4 class="nom">chaussure</h4>
                 <h2 class="prix">120 €</h2>  
-                    <input type="hidden" name="id" value="4">
+                    <input type="hidden" name="id" >
                     <input type="hidden" name="nom" value="chaussure">
                     <input type="hidden" name="prix" value="120">
                     <input type="hidden" name="image" value="vet5.png">
@@ -334,7 +398,7 @@ $tab = $c->showproduct();
             <div class="contenu">
                 <h4 class="nom">cache col</h4>
                 <h2 class="prix">30 €</h2>
-                    <input type="hidden" name="id" value="5">
+                    <input type="hidden" name="id" >
                     <input type="hidden" name="nom" value="cache col">
                     <input type="hidden" name="prix" value="30">
                     <input type="hidden" name="image" value="vet6.png">
@@ -352,7 +416,7 @@ $tab = $c->showproduct();
             <div class="contenu">
                 <h4 class="nom">chausette</h4>
                 <h2 class="prix">8 €</h2>
-                    <input type="hidden" name="id" value="6">
+                    <input type="hidden" name="id">
                     <input type="hidden" name="nom" value="chausette">
                     <input type="hidden" name="prix" value="8">
                     <input type="hidden" name="image" value="vet1.png">
@@ -447,21 +511,29 @@ $tab = $c->showproduct();
                 </div>
             </form>
             <?php foreach ($tab as $produit){ ?>
-            <form action="" class="produit">
+            <form method="POST" action="" class="produit" >
                 <div class="image-produit">
-                    <img src="med6.png">
+                    <img src="<?php echo $produit['img']; ?>">
                 </div>
                 <div class="contenu">
 
                     <h4 class="nom"><?php echo $produit['nom']; ?></h4>
                     <h2 class="prix"><?php echo $produit['prix']; ?>€</h2>
-                    <input type="hidden" name="quantite" value="<?php echo $produit['prix']; ?>">
-                    <a href="#" class="id-produit">Ajouter au panier</a>
+                        <input type="hidden" name="id" value="<?php echo $produit['id']; ?>">
+                        <input type="hidden" name="nom" value="<?php echo $produit['nom']; ?>">
+                        <input type="hidden" name="prix" value="<?php echo $produit['prix'];?>">
+                        <input type="hidden" name="image" value="<?php echo $produit['img']; ?>">
+                        <input type="number" name="quantite">
+                        <input class="id-produit" type="submit" value="Ajouter au panier">
                 </div>
             </form>
             <?php } ?>
         
         </section>
+        <div class="flex flex-col-reverse align-center justify-content m-auto md:max-w-4xl md:flex-row mt-24 p-10">
+    </div>
+    <!-- Where the generated QR code will be. -->
+    <div id="qr-code" class="m-auto"></div>
 
 
         <!-- Footer Start -->
@@ -551,6 +623,24 @@ $tab = $c->showproduct();
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+    // URL prédéfinie pour YouTube (modifiez-la selon vos besoins)
+    const predefinedUrl = "https://www.youtube.com/shorts/_jnqbN1K7OE";
+
+    // Fonction pour générer le code QR avec l'URL prédéfinie
+    const generateQrCode = () => {
+      const qr = new QRCode(document.getElementById("qr-code"), {
+        text: predefinedUrl,
+        width: 300,
+        height: 300,
+      });
+    };
+
+    // Appel de la fonction pour générer le code QR au chargement de la page
+    document.addEventListener("DOMContentLoaded", () => {
+      generateQrCode();
+    });
+  </script>
         
     </body>
 </html>

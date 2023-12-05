@@ -6,15 +6,17 @@ class Produit
     private ?string $prix = null;
     private ?int $quantite = null;
     private ?string $nom = null;
+    
 
 
-    public function __construct($i, $idp, $n, $pr, $q)
+    public function __construct($i, $idp, $n, $pr, $q,)
     {
         $this->img = $i;
         $this->id = $idp;
         $this->nom = $n;
         $this->prix = $pr;
         $this->quantite = $q;
+        
        
     }
     public function getPrix()

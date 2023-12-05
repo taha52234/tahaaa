@@ -190,6 +190,19 @@ try {
             die('Error: ' . $e->getMessage());
         }
     }
+    public function searchproduit($nom){
+        $sql = "SELECT * from produit where nom = :nom";
+        $db = config::getConnexion();
+        try {
+            $query = $db->prepare($sql);
+            $query->bindValue(':nom', $nom);
+            $query->execute();
+            $Product = $query->fetch();
+            return $Product;
+        } catch (Exception $e) {
+            die('Error: ' . $e->getMessage());
+        }
+    }
     public function updateProduit($product, $id){
         try {
             $db = config::getConnexion();
